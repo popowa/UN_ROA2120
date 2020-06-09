@@ -1,0 +1,12 @@
+<div class="row">
+  {% for photo in photos %}
+    <div class="col-sm-3">
+      <blockquote class="twitter-tweet" data-conversation="none">
+      <p lang="ja" dir="ltr">{{photo.text}}
+        <a href="{{photo.entities.url}}">{{photo.entities.display_url}}</a></p>
+        &mdash; {{photo.user.name}} (@{{photo.user.screen_name}})
+        <a href="https://twitter.com/{{photo.user.screen_name}}/status/{{photo.id}}?ref_src=twsrc%5Etfw">{{photo.created_at}}</a>
+      </blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+  {% endfor %}
+</div>
