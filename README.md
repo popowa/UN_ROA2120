@@ -1,5 +1,5 @@
 # UN_ROA2120
-Unofficial @ROA2120 data
+潜航機動隊を個人的に楽しむツールなど
 
 # About
 タスク管理とコード管理
@@ -7,7 +7,7 @@ Unofficial @ROA2120 data
 
 
 
-# 利用ツール
+# 利用した、しようと思っているツール
 
 * Bootstrap https://getbootstrap.com/
 * Twitter API

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>非公式ダメージ値計算フォーム: 第一イベント 第二章 EBE TYPE00 集計分</title>
+    <script>
+    $(function() {
+      //セレクトボックスが切り替わったら発動
+        $('#selectHP').change(function() {
+          var val = $(this).val();
+          $('#currentHP').children().remove();
+          var currentHPNum = (val*50)+50;
+          var injuryHalf = currentHPNum/2;
+          var injuryThird = currentHPNum/3;
+          for(var i=currentHPNum; i>0; i-=20){
+            var addontext = '';
+            if(i <= injuryHalf && i > injuryThird){
+              addontext = '（中傷）';
+            } else if(i <= injuryThird) {
+              addontext = '（重傷）';
+            }
+            $('#currentHP').append($('<option>').val(i).text(i + addontext));
+          }
+
+
+        $('#calDamage').on("click form", function(){
+          //作品のダメージ値をゲットする
+          var sumDamange = $('#selectType').val() * $('#contentNum').val();
+          //optionを乗算
+          $(':checkbox:checked').each(function() {
+            var val2 = $(this).val();
+            sumDamange = sumDamange * val2;
+          });
+          //隊員のステイタスを減算する
+          var memberStatus = $('#currentHP').val();
+          var tempNum = 1;
+            if(memberStatus <= injuryHalf && memberStatus > injuryThird){
+              tempNum = 0.7;
+            } else if(memberStatus <= injuryThird) {
+              tempNum = 0.5;
+            }
+            sumDamange = sumDamange * tempNum * 1.5;
+          $('#totalDamage').text(sumDamange.toLocaleString());
+        });
+
+      });
+    });
+    </script>
+    <style>
+    div { padding: 3px;}
+    </style>
+
+  </head>
+  <body>
+    <header>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between">
+      <p class="navbar-brand d-flex align-items-center">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calculator-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z"/>
+        </svg>        <strong>非公式ダメージ値計算フォーム: EBE TYPE-00</strong>
+    </div>
+  </div>
+</header>
+  <main role="main">
+    <div class="py-5 container">
+        <div class="d-flex justify-content-center">
+                      <form>
+                        <p>更新日: 2020/10/12,  過去の計算： EBE68  <a href="ebe68-w1.html">1週目</a>/ <a href="ebe68-w2.html">2週目</a></p>
+
+                        <h4>
+                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                          </svg>
+                          基本設定</h4>
+                        <p><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-droplet-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6zM6.646 4.646c-.376.377-1.272 1.489-2.093 3.13l.894.448c.78-1.559 1.616-2.58 1.907-2.87l-.708-.708z"/>
+                        </svg>
+                        キャラの基本体力値</p>
+                        <form>
+                        <div>
+                          <select id="selectHP">
+                            <option value="0">▼選択</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                          </select>
+                        </div>
+                        <div>
+                          <p>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-droplet-half" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"/>
+                              <path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"/>
+                            </svg>
+                            現在のキャラの体力値 <span class="text-primary">※基本値選択後自動で表示されます</span>
+                        </p>
+                          <select id="currentHP"></select>
+                        </div>
+                        <div>
+                          <p>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-richtext-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7 2l.5-2.5 3 3L10 5a1 1 0 0 1-1-1zM7 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm-.861 1.542l1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047l1.888.974V9.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V9s1.54-1.274 1.639-1.208zM5 11a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+                            </svg>
+                            作品タイプ
+                          </p>
+                            <select id="selectType">
+                              <option value="5000">イラスト/モノクロイラスト</option>
+                              <option value="15000">イラスト/カラーイラスト</option>
+                              <option value="10000">イラスト/漫画 x ページ数</option>
+                              <option value="3000">小説/〜1000文字</option>
+                              <option value="5000">小説/1000文字〜1500文字</option>
+                              <option value="10000">小説/1500文字〜2000文字</option>
+                              <option value="20000">小説/2000文字〜2500文字</option>
+                              <option value="30000">小説/2500文字〜3000文字</option>
+                              <option value="50000">小説/3000文字〜</option>
+                              <option value="15000">動画・gif作品</option>
+                            </select>
+                          </div>
+                          <div>
+                            <p>
+                              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z"/>
+                                <path d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z"/>
+                              </svg>
+                            作品枚数
+                            </p>
+                            <input type="text" id="contentNum" value="1">
+                          </div>
+                          <div>
+                            <h4>
+                              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gift-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3z"/>
+                                <path d="M15 7v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7h6zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9H2.5z"/>
+                              </svg>
+                              オプション</h4>
+                              <li class="list-unstyled"><input type="checkbox" value="3" id="contentOption">
+                                プレイベント参加者特典（初回のみ利用可能）
+                            <li class="list-unstyled"><input type="checkbox" value="1.2" id="contentOption">
+                              レーザーブレードを利用する描写(本イベント5回まで)
+                            <li class="list-unstyled">  <input type="checkbox" value="1.4" id="contentOption">
+                              グレネードランチャーを利用する描写(本イベント5回まで)
+                            <li class="list-unstyled">  <input type="checkbox" value="2" id="contentOption">
+                              隊長命令で行動する描写
+                            <li class="list-unstyled">  <input type="checkbox" value="5" id="contentOption">
+                              ケラウノス発動させる描写
+                              <li class="list-unstyled">  <input type="checkbox" value="5" id="contentOption">
+                                投稿者のキャラが第四大隊の場合（ロスト問わず）
+                        </div>
+                        <div>
+                        <input type="button" id="calDamage" value="計算する">
+                      </div>
+                      <div>
+                        <h4>
+                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-award-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 0l1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
+                            <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+                          </svg>
+                          ダメージ値
+                        </h4>
+                        <div class="border border-danger rounded">
+                          <h1 id="totalDamage" >
+                          </h1>
+                        </div>
+
+<div>
+                      <h4>
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-checklist" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                          <path fill-rule="evenodd" d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        計算式
+                      </h4>
+                    </div>
+                  <div>
+                  <table border="1px">
+                   <tr>
+                      <td>種別</td>
+                      <td>詳細</td>
+                      <td>ダメージ値</td>
+                   </tr>
+                   <tr>
+                      <td>イラスト</td>
+                      <td>モノクロイラスト</td>
+                      <td>5,000</td>
+                   </tr>
+                   <tr>
+                      <td>イラスト</td>
+                      <td>カラーイラスト</td>
+                      <td>15,000</td>
+                   </tr>
+                   <tr>
+                      <td>イラスト</td>
+                      <td>漫画 x ページ数</td>
+                      <td>10,000</td>
+                   </tr>
+                   <tr>
+                      <td>小説</td>
+                      <td>〜1000文字</td>
+                      <td>3,000</td>
+                   </tr>
+                   <tr>
+                      <td>小説</td>
+                      <td>1000文字〜1500文字</td>
+                      <td>5,000</td>
+                   </tr>
+                   <tr>
+                      <td>小説</td>
+                      <td>1500文字〜2000文字</td>
+                      <td>10,000</td>
+                   </tr>
+                   <tr>
+                      <td>小説</td>
+                      <td>2000文字〜2500文字</td>
+                      <td>20,000</td>
+                   </tr>
+                   <tr>
+                      <td>小説</td>
+                      <td>2500文字〜3000文字</td>
+                      <td>30,000</td>
+                   </tr>
+                   <tr>
+                      <td>小説</td>
+                      <td>3000文字〜</td>
+                      <td>50,000</td>
+                   </tr>
+                   <tr>
+                      <td>動画・gif作品</td>
+                      <td></td>
+                      <td>15,000</td>
+                   </tr>
+                   <tr>
+                      <td>ツイート</td>
+                      <td>隊員参加システムタグを利用する/1ツイート</td>
+                      <td>100</td>
+                   </tr>
+                </table>
+              </div>
+                <div>
+                <h4>
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dice-6-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm1 5.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm8 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm1.5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM4 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                  </svg>
+
+                  描写・状況によるダメージ値に影響する項目</h4>
+                <table border="1px">
+                    <tr>
+                        <td>描写内容</td>
+                        <td></td>
+                        <td>ダメージ値への影響</td>
+                        <td>増減</td>
+                    </tr>
+                    <tr>
+                        <td>プレイベント参加者特典</td>
+                        <td>初回のみ利用可能</td>
+                        <td>300%</td>
+                        <td>増加</td>
+                    </tr>
+                    <tr>
+                        <td>レーザーブレードを利用する描写</td>
+                        <td>回数の上限：5回/イベント毎に回数がリセットされる</td>
+                        <td>20%</td>
+                        <td>増加</td>
+                    </tr>
+                    <tr>
+                        <td>グレネードランチャーを利用する描写</td>
+                        <td>回数の上限：5回/イベント毎に回数がリセットされる</td>
+                        <td>40%</td>
+                        <td>増加</td>
+                    </tr>
+                    <tr>
+                        <td>隊長命令で行動する描写</td>
+                        <td></td>
+                        <td>200%</td>
+                        <td>増加</td>
+                    </tr>
+                    <tr>
+                        <td>ケラウノス発動させる描写</td>
+                        <td>回数の上限: 2回（2回目はロスト確定）/全イベントを通して</td>
+                        <td>500%</td>
+                        <td>増加</td>
+                    </tr>
+                    <tr>
+                        <td>中傷（体力が半分以下の場合）</td>
+                        <td></td>
+                        <td>30%</td>
+                        <td>減少</td>
+                    </tr>
+                    <tr>
+                        <td>重傷(体力が1/3以下の場合）</td>
+                        <td></td>
+                        <td>50%</td>
+                        <td>減少</td>
+                    </tr>
+                    <tr>
+                        <td>第二集計分</td>
+                        <td>無条件に付与される</td>
+                        <td>150%</td>
+                        <td>増加</td>
+                    </tr>
+                    <tr>
+                        <td>星の守り人</td>
+                        <td>第四大隊全員に無条件に付与される/体力減少なし</td>
+                        <td>500%</td>
+                        <td>増加</td>
+                    </tr>
+                </table>
+              </div>
+              <div>
+                <h4>
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
+                    <circle cx="8" cy="4.5" r="1"/>
+                  </svg>                  免責</h4>
+                <p>本コンテンツを利用して起こった不利益に関しては作者は補償しません。自己責任にてご利用下さい。<br />
+                  Googleアナリティクス等のトラッキングシステム等は入れていません。<br />
+                本コンテンツは潜航機動隊の主催者様には一切関係が無いものですので、主催者様には問い合わせをしないで下さい。
+                  情報が更新され新しいオプションやルールが適応された場合は、公式のルールが正しい物とし参照して下さい。</p>
+                  <p>Special thanks to
+                    <a href="https://twitter.com/GeneJest" target="_blank">@GeneJest</a>,
+                    <a href="https://twitter.com/fuchichi_titti" target="_blank">@fuchichi_titti</a>,
+                      <a href="https://twitter.com/BW_legyak08" target="_blank">@BW_legyak08</a></p>
+                  <p>created by <a href="https://twitter.com/po3515" target="_blank">@po3515</a></p>
+
+              </div>
+
+</form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
